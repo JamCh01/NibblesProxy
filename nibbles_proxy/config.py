@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import logging
-# from static import REDIS_CONEECTION
+from static import MYSQL_CONNECTION
 
 
 class Config(object):
     THREADPOOL_NUM = 10
-    # REDIS_CONEECTION = REDIS_CONEECTION
+    MYSQL_CONNECTION = MYSQL_CONNECTION
     VALIDATED_PROXY_URL = 'https://www.baidu.com/'
     IF_USE_PROXY = True
 
