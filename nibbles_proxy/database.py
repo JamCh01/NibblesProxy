@@ -45,3 +45,6 @@ class Database(object):
             self.session.commit()
         else:
             pass
+
+    def close(self):
+        self.session.close()
