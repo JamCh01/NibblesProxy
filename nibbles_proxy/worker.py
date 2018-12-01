@@ -5,6 +5,7 @@ from functools import wraps
 from utils import Requster
 from spiders import __spiders__
 from apscheduler.schedulers.background import BackgroundScheduler
+from database import Database
 
 
 def singleton(cls):
@@ -25,6 +26,7 @@ class Worker(object):
 
     def __init__(self):
         self.requster = Requster()
+        self.database = Database()
 
     def start_work(self):
         pass
@@ -38,5 +40,19 @@ class Worker(object):
         crawl_result = spider.parse()
         filtered_models = self.requster.filter_proxy(models=crawl_result)
         for item in filtered_models:
-            ip = item.get_attr(name='ip')
-            port = item.get_attr(name='port')
+            self.database.insert_models(model=item)
+
+    def random_item(self):
+        proxy = self.database.random()
+        return '{protocal}://{ip}:{port}'.format(
+            protocal=proxy.protocal, ip=proxy.ip, port=proxy.port)
+
+    def fail(self, ip):
+        self.database.fail(ip=ip)
+
+    def stop(self):
+        self.database.close()
+
+
+def _worker():
+    return Worker()
