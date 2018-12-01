@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from sqlalchemy import Column, Integer, String, BIGINT
+from sqlalchemy import Column, Integer, String
 
 
 class ProxyTemplate():
     id = Column(Integer, primary_key=True, autoincrement=True)
-    ip = Column(BIGINT, nullable=False, comment='代理IP地址')
+    ip = Column(String(50), nullable=False, comment='代理IP地址')
     port = Column(Integer, nullable=False, comment='代理端口')
     protocal = Column(String(6), comment='代理协议')
     area = Column(String(256), comment='代理区域')
